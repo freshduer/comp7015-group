@@ -1,0 +1,8 @@
+*.txt
+*.feat
+*.vocab
+data/acllmdb/*
+data/acllmdb
+README
+*.json
+models

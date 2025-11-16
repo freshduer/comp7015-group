@@ -1,4 +1,4 @@
-- env
+- env setup
 ```bash
 conda create -n comp7015 python=3.10
 conda activate comp7015
@@ -19,7 +19,7 @@ uv pip install matplotlib
 
 ```
 
-- dataset
+- dataset preprocess
 ```bash
 makdir data
 cd ./data

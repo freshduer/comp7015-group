@@ -3,5 +3,5 @@
 *.vocab
 data/acllmdb/*
 data/acllmdb
-*.json
+.vscode
 models

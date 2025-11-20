@@ -1,0 +1,10 @@
+{
+  "min_freq": 2,
+  "vocab_size": 48707,
+  "max_len": 256,
+  "splits": {
+    "train": 22500,
+    "val": 2500,
+    "test": 25000
+  }
+}

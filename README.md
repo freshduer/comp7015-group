@@ -27,4 +27,16 @@ tar -xvf aclImdb_v1.tar.gz
 
 run imdb_preprocess.ipynb
 
+the imdb_preprocess.ipynb is only aiming for data preprocess
+the example lstm and bert inside it is just for usage example
+```
+
+- other parts
+```bash
+For LSTM basline
+see readme in baseline folder
+
+For Bert Model
+see readme in bert folder
+
 ```

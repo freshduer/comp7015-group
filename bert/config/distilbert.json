@@ -1,0 +1,10 @@
+{
+  "model_name": "distilbert-base-uncased",
+  "output_dir": "models/distilbert-imdb",
+  "num_epochs": 3,
+  "batch_size": 16,
+  "max_length": 256,
+  "learning_rate": 5e-5,
+  "seed": 42
+}
+

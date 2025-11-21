@@ -1,0 +1,44 @@
+\subsection{BERT vs LSTM: Comparative Analysis}
+
+Our experiments reveal significant differences between Transformer-based and LSTM-based approaches to sentiment analysis, both in terms of performance and computational characteristics.
+
+\subsubsection{Performance Comparison}
+
+The fine-tuned BERT model achieved a test accuracy of 91.60\% and an F1 score of 0.9174, representing a substantial improvement over the best LSTM baseline (88.62\% accuracy, F1 score of 0.889). This performance gain of approximately 3\% can be attributed to several factors:
+
+\begin{itemize}
+    \item \textbf{Pre-trained Representations}: BERT benefits from extensive pre-training on large-scale corpora, which provides rich semantic and syntactic knowledge that can be effectively transferred to the sentiment analysis task. In contrast, the LSTM model must learn these representations from scratch using only the 22,500 training samples.
+    \item \textbf{Bidirectional Context}: BERT's bidirectional attention mechanism allows each token to consider context from both directions simultaneously, whereas the BiLSTM processes sequences in both directions but cannot achieve the same level of parallel context integration.
+    \item \textbf{Sub-word Tokenization}: The WordPiece tokenizer eliminates OOV issues entirely, whereas the LSTM approach encountered a 1.57\% OOV rate on the test set, potentially limiting its ability to handle rare or unseen words.
+\end{itemize}
+
+\subsubsection{Learning Rate Sensitivity}
+
+A critical finding from our experiments is the extreme sensitivity of Transformer fine-tuning to learning rate selection. While the LSTM model showed relatively stable performance across learning rates from $5 \times 10^{-5}$ to $10^{-3}$, the BERT models completely failed to converge when using learning rates above $2 \times 10^{-4}$. This sensitivity stems from the fact that pre-trained models have already learned useful representations, and aggressive fine-tuning can destroy these pre-trained features.
+
+The optimal learning rate of $2 \times 10^{-5}$ represents a conservative fine-tuning strategy that allows the model to adapt to the downstream task while preserving the valuable pre-trained knowledge. This finding aligns with established best practices in transfer learning, where lower learning rates are typically employed to avoid catastrophic forgetting of pre-trained weights.
+
+\subsubsection{Computational Trade-offs}
+
+While BERT models achieve superior performance, they come with significant computational costs. The BERT-base-uncased model requires approximately 418MB of storage and 3.1GB of GPU memory during training, compared to the LSTM model's much smaller footprint. Training time is also substantially longer: BERT requires approximately 1013 seconds for 3 epochs, compared to the LSTM's training time (which varies with batch size but is generally faster).
+
+However, DistilBERT offers a compelling middle ground: it achieves 90.44\% accuracy (only 1.2\% lower than BERT) while requiring 40\% less memory and training 1.8$\times$ faster. This makes DistilBERT an attractive option for scenarios where computational resources are constrained but high performance is still desired.
+
+\subsubsection{Attention Mechanism Insights}
+
+The attention visualization reveals that BERT's self-attention mechanism effectively identifies and focuses on sentiment-bearing words and their contextual relationships. Unlike the LSTM's attention mechanism, which operates on sequential hidden states, BERT's multi-head attention allows the model to attend to multiple relevant positions simultaneously, creating a more flexible and powerful representation.
+
+The attention patterns show that the model does not simply focus on obvious sentiment words in isolation, but rather considers the broader context. For example, in negative reviews, the model may attend to negation words ("not", "never") in conjunction with positive words, correctly interpreting phrases like "not good" as negative sentiment.
+
+\subsubsection{Limitations and Future Work}
+
+Despite the strong performance of Transformer models, several limitations remain:
+
+\begin{itemize}
+    \item \textbf{Computational Cost}: The large model size and training time make BERT less suitable for resource-constrained environments or real-time applications.
+    \item \textbf{Sequence Length}: Both models are limited to 256 tokens, which means that approximately 28\% of reviews are truncated, potentially losing important information from longer reviews.
+    \item \textbf{Interpretability}: While attention visualization provides some insights, the 12-layer architecture with 12 attention heads creates complex interactions that are difficult to fully interpret.
+\end{itemize}
+
+Future work could explore knowledge distillation techniques to create even smaller models, investigate methods to handle longer sequences more efficiently, or develop more sophisticated interpretability tools to better understand the model's decision-making process.
+

@@ -1,0 +1,49 @@
+\subsection{BERT Experiment Contributions}
+
+The BERT-based sentiment analysis experiments required comprehensive work across model implementation, hyperparameter tuning, performance evaluation, and interpretability analysis. The following contributions were made to ensure rigorous and reproducible results.
+
+\subsubsection{Model Implementation and Fine-tuning Framework}
+
+I was responsible for the design and implementation of the BERT fine-tuning pipeline using the HuggingFace Transformers library. My contributions included:
+
+\begin{itemize}
+    \item \textbf{Training Infrastructure}: I developed a flexible training framework that supports both BERT and DistilBERT models with configurable hyperparameters. The framework integrates with the existing data preprocessing pipeline, ensuring consistency with the LSTM experiments.
+    \item \textbf{Hyperparameter Exploration}: I systematically explored learning rates from $2 \times 10^{-6}$ to $1 \times 10^{-3}$, testing both with and without learning rate warmup. This comprehensive search identified the optimal learning rate of $2 \times 10^{-5}$ for both models.
+    \item \textbf{Training Optimization}: I optimized the training pipeline for the RTX 4090 GPU, implementing mixed-precision training (FP16) to reduce memory usage and accelerate training. The framework includes robust error handling and checkpoint management to support long-running experiments.
+    \item \textbf{Evaluation Metrics}: I implemented comprehensive evaluation metrics including accuracy, F1 score, precision, and recall, with automatic logging of epoch-by-epoch performance and final test set results.
+\end{itemize}
+
+\subsubsection{Performance Analysis and Visualization}
+
+To provide clear insights into model behavior, I developed visualization and analysis tools:
+
+\begin{itemize}
+    \item \textbf{F1 Score Curves}: I created scripts to generate F1 score progression plots for different learning rate configurations, enabling visual comparison of training dynamics across hyperparameter settings.
+    \item \textbf{Attention Visualization}: I implemented attention weight extraction and heatmap visualization tools to analyze how the models process sentiment information. This involved extracting attention matrices from specific Transformer layers and heads, and creating publication-quality visualizations.
+    \item \textbf{Performance Comparison Tables}: I compiled comprehensive performance tables comparing BERT and DistilBERT across different configurations, including computational metrics such as training time, memory usage, and model size.
+\end{itemize}
+
+\subsubsection{Experimental Rigor and Reproducibility}
+
+To ensure experimental rigor, I implemented several key practices:
+
+\begin{itemize}
+    \item \textbf{Reproducibility}: All experiments used fixed random seeds (SEED=42) consistent with the LSTM baseline, ensuring that results are reproducible and comparable.
+    \item \textbf{Data Consistency}: The BERT experiments utilized the same train/validation/test splits as the LSTM baseline, ensuring fair comparison between architectures.
+    \item \textbf{Comprehensive Logging}: I implemented detailed logging of all hyperparameters, training metrics, and computational resources, enabling thorough analysis and future replication.
+    \item \textbf{Best Model Selection}: I implemented automatic best model selection based on validation accuracy, with checkpoint saving to preserve the optimal model configuration.
+\end{itemize}
+
+\subsubsection{Results and Insights}
+
+Through systematic experimentation, I identified several key findings:
+
+\begin{itemize}
+    \item The optimal learning rate for fine-tuning pre-trained Transformers is $2 \times 10^{-5}$, with higher rates causing training instability.
+    \item BERT-base-uncased achieves 91.60\% test accuracy, representing a 3\% improvement over the best LSTM baseline.
+    \item DistilBERT provides an excellent efficiency-performance trade-off, achieving 90.44\% accuracy with 40\% less memory and 1.8$\times$ faster training.
+    \item Attention visualization reveals that the models effectively focus on sentiment-bearing words and their contextual relationships.
+\end{itemize}
+
+These contributions provide a comprehensive evaluation of Transformer-based models for sentiment analysis, establishing a strong baseline for future research and demonstrating the practical trade-offs between model complexity, performance, and computational efficiency.
+

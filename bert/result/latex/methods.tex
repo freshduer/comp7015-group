@@ -1,0 +1,29 @@
+\subsection{BERT-based Sentiment Analysis}
+
+To explore the capabilities of Transformer-based architectures, we fine-tuned two pre-trained models: BERT-base-uncased and DistilBERT-base-uncased on the IMDb sentiment classification task. This approach leverages transfer learning from large-scale pre-training on general text corpora, allowing the models to capture rich semantic and syntactic representations that can be effectively adapted to the sentiment analysis domain.
+
+\subsubsection{Model Architecture and Pre-training}
+
+Both models are based on the Transformer architecture, which employs multi-head self-attention mechanisms to capture long-range dependencies in text. BERT-base-uncased consists of 12 Transformer layers, 12 attention heads, and approximately 110 million parameters. DistilBERT-base-uncased is a distilled version of BERT, containing 6 Transformer layers, 12 attention heads, and approximately 67 million parameters, achieving a 60\% reduction in model size while maintaining competitive performance.
+
+The key advantage of these pre-trained models lies in their bidirectional context encoding. Unlike unidirectional language models, BERT processes the entire input sequence simultaneously, allowing each token to attend to all other tokens in both directions. This bidirectional understanding is particularly beneficial for sentiment analysis, where the sentiment of a word may depend on context from both preceding and following tokens.
+
+\subsubsection{Sub-word Tokenization}
+
+Unlike the LSTM baseline which relied on a fixed vocabulary with OOV handling, BERT models utilize sub-word tokenization through the WordPiece tokenizer. This approach breaks down words into smaller sub-word units, enabling the model to handle out-of-vocabulary words by decomposing them into known sub-word pieces. For example, the word "unhappiness" might be tokenized as ["un", "##happ", "##iness"], where "##" indicates a sub-word continuation. This strategy effectively eliminates the OOV problem encountered in the LSTM approach, as any word can be represented as a combination of sub-word tokens from the pre-trained vocabulary.
+
+\subsubsection{Fine-tuning Strategy}
+
+We fine-tuned both models using the HuggingFace Transformers library, which provides standardized implementations and training utilities. The fine-tuning process involved:
+
+\begin{itemize}
+    \item \textbf{Input Processing}: Text sequences were tokenized and truncated/padded to a maximum length of 256 tokens, consistent with the LSTM baseline to ensure fair comparison.
+    \item \textbf{Model Adaptation}: A classification head was added on top of the pre-trained Transformer encoder, consisting of a linear layer that maps the [CLS] token representation to binary sentiment logits.
+    \item \textbf{Training Configuration}: We employed the Adam optimizer with various learning rates (ranging from $2 \times 10^{-6}$ to $1 \times 10^{-3}$) to explore the sensitivity of fine-tuning to learning rate selection. The models were trained for 3 epochs with a batch size of 16. We also experimented with learning rate warmup (10\% of training steps) to stabilize early training.
+    \item \textbf{Regularization}: Dropout was applied within the Transformer layers (default rate of 0.1), and early stopping was implemented based on validation accuracy to prevent overfitting.
+\end{itemize}
+
+\subsubsection{Attention Visualization}
+
+To gain insights into the model's decision-making process, we implemented attention weight visualization for the BERT model. We extracted attention matrices from the final Transformer layer (layer 12) and visualized the attention patterns for selected test samples. The attention heatmaps reveal which tokens the model focuses on when making sentiment predictions, providing interpretability into the model's internal representations.
+

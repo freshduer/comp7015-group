@@ -5,3 +5,4 @@ data/acllmdb/*
 data/acllmdb
 .vscode
 models
+bert/models

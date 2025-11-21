@@ -1,0 +1,66 @@
+\subsection{BERT Fine-tuning Results}
+
+We conducted comprehensive experiments to evaluate the performance of BERT and DistilBERT models under various learning rate configurations. The results demonstrate the effectiveness of Transformer-based architectures for sentiment classification while highlighting the critical importance of hyperparameter selection.
+
+\subsubsection{Learning Rate Sensitivity Analysis}
+
+We systematically explored the impact of learning rate on model performance, testing values from $2 \times 10^{-6}$ to $1 \times 10^{-3}$. As shown in Table~\ref{tab:f1-scores}, both models exhibited significant sensitivity to learning rate selection. Extremely high learning rates ($1 \times 10^{-3}$ and $2 \times 10^{-4}$) led to training instability, resulting in random performance (accuracy $\approx$ 50\%, F1 $\approx$ 0.667), indicating that the models failed to converge effectively.
+
+The optimal learning rate for both models was found to be $2 \times 10^{-5}$, which achieved the best test F1 scores: 0.9174 for BERT-base-uncased and 0.9048 for DistilBERT-base-uncased. Interestingly, the addition of learning rate warmup did not consistently improve performance, suggesting that the pre-trained models are already well-initialized and do not require extensive warmup periods for this task.
+
+Figure~\ref{fig:bert-f1} and Figure~\ref{fig:distilbert-f1} illustrate the validation F1 score progression across epochs for different learning rates. Both models show consistent improvement over epochs when using appropriate learning rates, with the best configurations reaching validation F1 scores above 0.92 for BERT and 0.91 for DistilBERT.
+
+\subsubsection{Model Performance Comparison}
+
+Table~\ref{tab:bert-performance} summarizes the best-performing configurations for both models. BERT-base-uncased achieved a test accuracy of 91.60\% and an F1 score of 0.9174 with a learning rate of $2 \times 10^{-5}$. DistilBERT-base-uncased, despite having 40\% fewer parameters, achieved a competitive test accuracy of 90.44\% and an F1 score of 0.9048 under the same learning rate configuration.
+
+The performance gap between BERT and DistilBERT (approximately 1.2\% in accuracy) demonstrates the trade-off between model size and performance. However, DistilBERT offers significant advantages in terms of computational efficiency: it requires approximately 40\% less memory (1.8GB vs 3.1GB peak training memory) and trains approximately 1.8$\times$ faster (571 seconds vs 1013 seconds for 3 epochs).
+
+\subsubsection{Attention Mechanism Analysis}
+
+To understand how the models process sentiment information, we visualized attention weights from the final Transformer layer. Figure~\ref{fig:attention-291} and Figure~\ref{fig:attention-2288} show attention heatmaps for two representative test samples. The heatmaps reveal that the model assigns high attention weights to sentiment-bearing words (e.g., "excellent", "terrible") and their surrounding context, demonstrating that the self-attention mechanism effectively identifies and focuses on semantically relevant tokens for sentiment classification.
+
+The attention patterns show that the [CLS] token, which is used for final classification, attends strongly to key sentiment words throughout the sequence, confirming that the model aggregates information from multiple relevant positions rather than relying on a single token.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Model & Test Accuracy & Test F1 & Precision & Recall \\
+\midrule
+BERT-base-uncased (LR=2e-5) & 91.60\% & 0.9174 & 0.916 & 0.919 \\
+DistilBERT-base-uncased (LR=2e-5) & 90.44\% & 0.9048 & 0.905 & 0.905 \\
+\bottomrule
+\end{tabular}
+\caption{Best performing BERT model configurations on test set}
+\label{tab:bert-performance}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{result/plots/bert-base-uncased-f1.png}
+\caption{Validation F1 score progression for BERT-base-uncased across different learning rates}
+\label{fig:bert-f1}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{result/plots/distilbert-base-uncased-f1.png}
+\caption{Validation F1 score progression for DistilBERT-base-uncased across different learning rates}
+\label{fig:distilbert-f1}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{result/plots/attention_heatmap_sample291.png}
+\caption{Attention heatmap visualization for test sample 291, showing attention weights from the final Transformer layer}
+\label{fig:attention-291}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{result/plots/attention_heatmap_sample2288.png}
+\caption{Attention heatmap visualization for test sample 2288, demonstrating the model's focus on sentiment-bearing tokens}
+\label{fig:attention-2288}
+\end{figure}
+

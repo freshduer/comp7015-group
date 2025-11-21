@@ -1,0 +1,14 @@
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccccc}
+\toprule
+Model & LR=1e-3 & LR=2e-4 & LR=2e-5 & LR=2e-5 (warmup) & LR=2e-6 & LR=5e-5 (warmup) \\
+\midrule
+BERT-base-uncased & 0.6667 & 0.6667 & 0.9174 & 0.9168 & 0.8975 & 0.9059 \\
+DistilBERT-base-uncased & 0.6667 & 0.6688 & 0.9048 & 0.9050 & 0.8844 & 0.9024 \\
+\bottomrule
+\end{tabular}
+\caption{Test set F1 scores for different models and learning rates}
+\label{tab:f1-scores}
+\end{table}
+

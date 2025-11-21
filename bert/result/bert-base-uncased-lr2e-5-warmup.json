@@ -1,0 +1,51 @@
+{
+  "epochs": [
+    {
+      "epoch": 1,
+      "eval_loss": 0.2564888298511505,
+      "eval_accuracy": 0.9116,
+      "eval_f1": 0.9104175111471423
+    },
+    {
+      "epoch": 2,
+      "eval_loss": 0.28151175379753113,
+      "eval_accuracy": 0.9248,
+      "eval_f1": 0.9254559873116575
+    },
+    {
+      "epoch": 3,
+      "eval_loss": 0.31897392868995667,
+      "eval_accuracy": 0.9232,
+      "eval_f1": 0.9236276849642004
+    }
+  ],
+  "summary": {
+    "val_metrics": {
+      "eval_loss": 0.28151607513427734,
+      "eval_accuracy": 0.9248,
+      "eval_f1": 0.9254559873116575,
+      "eval_runtime": 7.4618,
+      "eval_samples_per_second": 335.039,
+      "eval_steps_per_second": 10.587,
+      "epoch": 3.0
+    },
+    "test_metrics": {
+      "eval_loss": 0.31323081254959106,
+      "eval_accuracy": 0.9152,
+      "eval_f1": 0.9167974882260597,
+      "eval_runtime": 7.2117,
+      "eval_samples_per_second": 346.657,
+      "eval_steps_per_second": 10.954,
+      "epoch": 3.0
+    },
+    "train_wall_time_sec": 1018.5842888159677,
+    "val_eval_time_sec": 12.816012174007483,
+    "test_eval_time_sec": 12.556852814974263,
+    "train_peak_mem_bytes": 3277233152,
+    "val_peak_mem_bytes": 1754605056,
+    "test_peak_mem_bytes": 1754612736,
+    "param_count": 109483778,
+    "estimated_model_size_mb": 417.64746856689453,
+    "device": "NVIDIA GeForce RTX 4090"
+  }
+}
